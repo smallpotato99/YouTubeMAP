@@ -1,8 +1,6 @@
 package com.example.youtubemap;
 
 import java.io.IOException;
-import java.util.List;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -19,27 +17,35 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.app.Dialog;
-import android.app.SearchManager;
-import android.app.SearchableInfo;
-import android.content.Context;
-import android.location.Address;
-import android.location.Geocoder;
+import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
+import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v7.widget.SearchView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.Toast;
 
 
 public class MainActivity extends FragmentActivity implements
 	GooglePlayServicesClient.ConnectionCallbacks,
 	GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
+	
+	private DrawerLayout mDrawerLayout;
+	private ActionBarDrawerToggle mDrawerToggle;
+	private LinearLayout mllDrawerContent;
+	private ListView mlvDrawerMenu;
+	private int mCurrentMenuItemPosition = -1;
+	public static final String[] MENU_ITEMS = new String[]{"", "Item 1", "Item 2", "Item 3", "Item 4", "Settings"};
 	
 	private static final int GPS_ERRORDAILOG_REQUEST = 9001;
 //	private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9002;
@@ -54,16 +60,44 @@ public class MainActivity extends FragmentActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // enable ActionBar app icon to behave as action to toggle nav drawer
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
         
         if (servicesOK()) {       	   	
         	setContentView(R.layout.activity_mapview);
         	
-//        	mMapView = (MapView) findViewById(R.id.map);       
+//        	mMapView = (MapView) findViewById(R.id.map);
 //        	mMapView.onCreate(savedInstanceState);
         	
         	if (initMap()) {
+        		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+                mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+                mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.END);
+                mDrawerToggle = new ActionBarDrawerToggle (
+                		this,
+                		mDrawerLayout,
+                		R.drawable.ic_drawer,
+                		R.string.open_left_drawer,
+                		R.string.close_left_drawer
+                		) {
+                	
+                	public void onDrawerOpened(View drawerView) {
+                		getActionBar().setTitle(R.string.open_left_drawer);
+                	}
+                	
+                	public void onDrawerClosed(View drawerView) {
+                		if (mCurrentMenuItemPosition > -1) {
+                			getActionBar().setTitle(MENU_ITEMS[mCurrentMenuItemPosition]);
+                		}
+                		else {
+                			getActionBar().setTitle(R.string.app_name);	
+                		}
+                	}
+                };
+                
+                mDrawerLayout.setDrawerListener(mDrawerToggle);
+                getActionBar().setDisplayHomeAsUpEnabled(true);
+                getActionBar().setHomeButtonEnabled(true);
+                setDrawerMenu();
+        		
         		Toast.makeText(this, "Ready to map!", Toast.LENGTH_SHORT).show();
         		mMap.setMyLocationEnabled(true);
         		mLocationClient = new LocationClient(this, this, this);
@@ -77,14 +111,24 @@ public class MainActivity extends FragmentActivity implements
         	setContentView(R.layout.activity_main);
         }
     }
+	
+	@Override
+	protected void onPostCreate(Bundle savedInstanceState) {
+	    super.onPostCreate(savedInstanceState);
+	    mDrawerToggle.syncState();
+	}
 
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+	    super.onConfigurationChanged(newConfig);
+	    mDrawerToggle.onConfigurationChanged(newConfig);
+	}
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
     	MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.main, menu);
-//    	getMenuInflater().inflate(R.menu.main, menu);    	
 //        MenuItem searchItem = menu.findItem(R.id.editText1);
 //        SearchView searchView = (SearchView) searchItem.getActionView();
 //        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -94,8 +138,8 @@ public class MainActivity extends FragmentActivity implements
 //        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 //        SearchView searchView = (SearchView) menu.findItem(R.id.txtSearch).getActionView();
 //        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-//        return true;
-    	return super.onCreateOptionsMenu(menu);
+        return true;
+//    	return super.onCreateOptionsMenu(menu);
     }
     
     /* Called whenever we call invalidateOptionsMenu() */
@@ -106,7 +150,12 @@ public class MainActivity extends FragmentActivity implements
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {    	
+    public boolean onOptionsItemSelected(MenuItem item) {
+	    if (mDrawerToggle.onOptionsItemSelected(item)) {   		
+		      return true;
+		    }
+
+		    /*
     	switch (item.getItemId()) {
     	case R.id.mapTypeNone:
     		mMap.setMapType(GoogleMap.MAP_TYPE_NONE);
@@ -128,7 +177,7 @@ public class MainActivity extends FragmentActivity implements
     	default:
     		break;
     	}
-    	
+    	*/
     	return super.onOptionsItemSelected(item);
     }
     
@@ -198,11 +247,11 @@ public class MainActivity extends FragmentActivity implements
 	}	
 	*/
     
-    private void gotoLocation(double lat, double lng, float defZoom) {
-    	LatLng ll = new LatLng(lat, lng);
-    	CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll,defZoom);
-    	mMap.moveCamera(update);    	
-    }
+//    private void gotoLocation(double lat, double lng, float defZoom) {
+//    	LatLng ll = new LatLng(lat, lng);
+//    	CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll,defZoom);
+//    	mMap.moveCamera(update);    	
+//    }
     
     public void geoLocate(View v) throws IOException {
     	    /*	
@@ -240,10 +289,10 @@ public class MainActivity extends FragmentActivity implements
     	*/
     }
     
-    private void hideSoftKeyboard(View v) {
-    	InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-    	imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
-    }
+//    private void hideSoftKeyboard(View v) {
+//    	InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//    	imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+//    }
     
    @Override
     protected void onStop() {
@@ -327,4 +376,26 @@ public class MainActivity extends FragmentActivity implements
 //            selectItem(position);
 //        }
 //    }
+
+	private void setDrawerMenu() {
+		mlvDrawerMenu = (ListView) findViewById(R.id.left_menu);
+		mllDrawerContent = (LinearLayout) findViewById(R.id.left_drawer);
+		
+		mlvDrawerMenu.setOnItemClickListener(new OnItemClickListener() {
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				selectMenuItem(position);
+			}
+
+			private void selectMenuItem(int position) {
+				mCurrentMenuItemPosition = position;
+				mlvDrawerMenu.setItemChecked(position, true);
+				mDrawerLayout.closeDrawer(mllDrawerContent);				
+			}
+		});
+		mlvDrawerMenu.setAdapter(new ArrayAdapter<String> (
+				this,
+				R.layout.left_drawer_menu_list,
+				MENU_ITEMS
+		));
+	}	
 }
