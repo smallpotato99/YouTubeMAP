@@ -1,0 +1,43 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.youtubemap.MainActivity" >
+    
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_action_search"
+        android:title="@string/action_search"
+        android:showAsAction="ifRoom|collapseActionView"
+        android:actionViewClass="android.widget.SearchView" />
+    
+    <item 
+        android:id="@+id/mapTypeNormal"
+        android:title="@string/txt_mapTypeNormal"/>
+    
+	<item 
+	 android:id="@+id/mapTypeSatellite"
+	 android:title="@string/txt_mapTypeSatellite"/>
+	
+	<item 
+	 android:id="@+id/mapTypeTerrain"
+	 android:title="@string/txt_mapTypeTerrain"/>
+	
+	<item 
+	 android:id="@+id/mapTypeHybrid"
+	 android:title="@string/txt_mapTypeHybrid"/>
+	
+	<item 
+	 android:id="@+id/mapTypeNone"
+	 android:title="@string/txt_mapTypeNone"/>
+	
+	<item
+	    android:id="@+id/myLocation"
+	    android:title="@string/txt_gotoCurrentLocation"/>
+       
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        app:showAsAction="never"/>
+
+</menu>
