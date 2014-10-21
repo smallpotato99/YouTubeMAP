@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.location.Location;
 import android.os.Bundle;
@@ -24,6 +25,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -40,6 +42,7 @@ public class MainActivity extends FragmentActivity implements
 	GooglePlayServicesClient.ConnectionCallbacks,
 	GooglePlayServicesClient.OnConnectionFailedListener, LocationListener {
 	
+	// Navigation Drawer Menu
 	private DrawerLayout mDrawerLayout;
 	private ActionBarDrawerToggle mDrawerToggle;
 	private LinearLayout mllDrawerContent;
@@ -47,6 +50,7 @@ public class MainActivity extends FragmentActivity implements
 	private int mCurrentMenuItemPosition = -1;
 	public static final String[] MENU_ITEMS = new String[]{"", "Item 1", "Item 2", "Item 3", "Item 4", "Settings"};
 	
+	// Google MAP API
 	private static final int GPS_ERRORDAILOG_REQUEST = 9001;
 //	private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9002;
 	GoogleMap mMap;
@@ -70,7 +74,6 @@ public class MainActivity extends FragmentActivity implements
         	if (initMap()) {
         		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
                 mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-                mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.END);
                 mDrawerToggle = new ActionBarDrawerToggle (
                 		this,
                 		mDrawerLayout,
@@ -127,8 +130,8 @@ public class MainActivity extends FragmentActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-    	MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
+//    	MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.main, menu);
 //        MenuItem searchItem = menu.findItem(R.id.editText1);
 //        SearchView searchView = (SearchView) searchItem.getActionView();
 //        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -377,12 +380,26 @@ public class MainActivity extends FragmentActivity implements
 //        }
 //    }
 
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent e) {
+		if (keyCode == KeyEvent.KEYCODE_MENU) {
+			// Menu Key
+			return true;			
+		}
+		return super.onKeyDown(keyCode, e);
+	}
+	
 	private void setDrawerMenu() {
 		mlvDrawerMenu = (ListView) findViewById(R.id.left_menu);
 		mllDrawerContent = (LinearLayout) findViewById(R.id.left_drawer);
 		
 		mlvDrawerMenu.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				if (position == 5) {
+					Toast.makeText(MainActivity.this, "BINGO", Toast.LENGTH_SHORT).show();
+					Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
+					startActivity(intent);
+				}
 				selectMenuItem(position);
 			}
 
@@ -392,10 +409,12 @@ public class MainActivity extends FragmentActivity implements
 				mDrawerLayout.closeDrawer(mllDrawerContent);				
 			}
 		});
+		
 		mlvDrawerMenu.setAdapter(new ArrayAdapter<String> (
 				this,
 				R.layout.left_drawer_menu_list,
 				MENU_ITEMS
 		));
+		
 	}	
 }
