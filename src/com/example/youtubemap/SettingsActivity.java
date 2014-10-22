@@ -10,6 +10,19 @@ public class SettingsActivity extends PreferenceActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		addPreferencesFromResource(R.xml.settings);		
+		addPreferencesFromResource(R.xml.settings);	
+		// ActionBar actionBar = getActionBar();
+		// actionBar.setHomeButtonEnabled(true);
 	}
+	
+	// @Override
+	// public boolean onCreateOptionsMenu(Menu menu) {
+	// 	getMenuInflater().inflate(R.menu.main, menu);
+	// 	return true;
+	// }
+	
+	// @Override
+	// public boolean onOptionsItemSelected(MenuItem item) {
+	// 	return super.onOptionsItemSelected(item);
+	// }
 }
