@@ -17,6 +17,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import android.app.Dialog;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.location.Location;
@@ -24,6 +26,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.Menu;
@@ -35,6 +38,7 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.Toast;
 
 
@@ -130,20 +134,22 @@ public class MainActivity extends FragmentActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-//    	MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.main, menu);
+    	MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main, menu);
 //        MenuItem searchItem = menu.findItem(R.id.editText1);
 //        SearchView searchView = (SearchView) searchItem.getActionView();
 //        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
 //        SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
 //        searchView.setSearchableInfo(info);
         
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchView searchView = (SearchView) menu.findItem(R.id.txtSearch).getActionView();
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSubmitButtonEnabled(true);
+        searchView.setIconifiedByDefault(false);
         return true;
 //    	return super.onCreateOptionsMenu(menu);
-    }
+    } 
     
     /* Called whenever we call invalidateOptionsMenu() */
     @Override
@@ -216,35 +222,30 @@ public class MainActivity extends FragmentActivity implements
     /*
 	@Override
 	protected void onDestroy() {
-		// TODO Auto-generated method stub
 		super.onDestroy();
 		mMapView.onDestroy();
 	}
 
 	@Override
 	public void onLowMemory() {
-		// TODO Auto-generated method stub
 		super.onLowMemory();
 		mMapView.onLowMemory();
 	}
 
 	@Override
 	protected void onPause() {
-		// TODO Auto-generated method stub
 		super.onPause();
 		mMapView.onPause();
 	}
 
 	@Override
 	protected void onResume() {
-		// TODO Auto-generated method stub
 		super.onResume();
 		mMapView.onResume();
 	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
-		// TODO Auto-generated method stub
 		super.onSaveInstanceState(outState);
 		mMapView.onSaveInstanceState(outState);
 	}	
@@ -352,7 +353,6 @@ public class MainActivity extends FragmentActivity implements
 
 	@Override
 	public void onLocationChanged(Location location) {
-		// TODO Auto-generated method stub
 		String msg = "Location: " + location.getLatitude() + ", " + location.getLongitude();
 		Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
 	}
@@ -383,7 +383,7 @@ public class MainActivity extends FragmentActivity implements
 	@Override
 	public boolean onKeyDown(int keyCode, KeyEvent e) {
 		if (keyCode == KeyEvent.KEYCODE_MENU) {
-			// Menu Key
+			Toast.makeText(this, "Menu Key pressed", Toast.LENGTH_SHORT).show();			
 			return true;			
 		}
 		return super.onKeyDown(keyCode, e);
@@ -409,12 +409,11 @@ public class MainActivity extends FragmentActivity implements
 				mDrawerLayout.closeDrawer(mllDrawerContent);				
 			}
 		});
-		
+
 		mlvDrawerMenu.setAdapter(new ArrayAdapter<String> (
 				this,
 				R.layout.left_drawer_menu_list,
 				MENU_ITEMS
 		));
-		
 	}	
 }

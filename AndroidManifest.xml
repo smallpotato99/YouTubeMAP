@@ -41,7 +41,11 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="Settings" ></activity>
+            android:label="Settings" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.example.youtubemap.MainActivity" />
+        </activity>
                
         <meta-data
 	        android:name="com.google.android.gms.version"
@@ -49,7 +53,7 @@
         
         <meta-data 
             android:name="com.google.android.maps.v2.API_KEY"
-            android:value="AIzaSyDT6rvHhAphe5nY1hBPtZQQyRnBhUevB00"/>
+            android:value="AIzaSyDT6rvHhAphe5nY1hBPtZQQyRnBhUevB00"/>      
     </application>
 
 </manifest>
