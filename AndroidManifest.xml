@@ -5,7 +5,7 @@
     android:versionName="1.0" >
 
     <uses-sdk
-        android:minSdkVersion="14"
+        android:minSdkVersion="16"
         android:targetSdkVersion="21" />
     <permission
         android:name="com.example.youtubemap.MAPS_RECEIVE"
@@ -42,6 +42,8 @@
         <activity
             android:name=".SettingsActivity"
             android:label="Settings" >
+            android:parentActivityName="com.example.youtubemap.MainActivity" >
+
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.youtubemap.MainActivity" />

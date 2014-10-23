@@ -1,5 +1,6 @@
 package com.example.youtubemap;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
@@ -11,8 +12,8 @@ public class SettingsActivity extends PreferenceActivity {
 		super.onCreate(savedInstanceState);
 		
 		addPreferencesFromResource(R.xml.settings);	
-		// ActionBar actionBar = getActionBar();
-		// actionBar.setHomeButtonEnabled(true);
+		 ActionBar actionBar = getActionBar();
+		 actionBar.setHomeButtonEnabled(true);
 	}
 	
 	// @Override
