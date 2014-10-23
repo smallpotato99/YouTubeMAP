@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_marginTop="?android:attr/actionBarSize"
+    android:paddingTop="?android:attr/actionBarSize" >
     
     <PreferenceCategory android:title="@string/pref_user_profile" >
         <EditTextPreference

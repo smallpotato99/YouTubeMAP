@@ -51,7 +51,7 @@ public class MainActivity extends FragmentActivity implements
 	private LinearLayout mllDrawerContent;
 	private ListView mlvDrawerMenu;
 	private int mCurrentMenuItemPosition = -1;
-	public static final String[] MENU_ITEMS = new String[]{"", "Item 1", "Item 2", "Item 3", "Item 4", "Settings"};
+	public static final String[] MENU_ITEMS = new String[]{"", "My Location", "Item 2", "Item 3", "Item 4", "Settings"};
 	
 	// Google MAP API
 	private static final int GPS_ERRORDAILOG_REQUEST = 9001;
@@ -394,12 +394,18 @@ public class MainActivity extends FragmentActivity implements
 		
 		mlvDrawerMenu.setOnItemClickListener(new OnItemClickListener() {
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				if (position == 5) {
+				switch (position) {
+				case 0:
+				case 1:
+					gotoCurrentLocation();
+					break;
+				case 5:				
 					Toast.makeText(MainActivity.this, "BINGO", Toast.LENGTH_SHORT).show();
 					Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
 					startActivity(intent);
+				default:
+					selectMenuItem(position);
 				}
-				selectMenuItem(position);
 			}
 
 			private void selectMenuItem(int position) {
