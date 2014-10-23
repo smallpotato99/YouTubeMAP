@@ -340,8 +340,8 @@ public class MainActivity extends FragmentActivity implements
     	
     	LocationRequest request = LocationRequest.create();
     	request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    	request.setInterval(60000);
-    	request.setFastestInterval(1000);
+//    	request.setInterval(60000);
+//    	request.setFastestInterval(1000);
     	
     	mLocationClient.requestLocationUpdates(request, this);    	
     }
@@ -398,6 +398,7 @@ public class MainActivity extends FragmentActivity implements
 				case 0:
 				case 1:
 					gotoCurrentLocation();
+					selectMenuItem(position);
 					break;
 				case 5:				
 					Toast.makeText(MainActivity.this, "BINGO", Toast.LENGTH_SHORT).show();
@@ -408,6 +409,7 @@ public class MainActivity extends FragmentActivity implements
 				}
 			}
 
+			// Close Menu Drawer
 			private void selectMenuItem(int position) {
 				mCurrentMenuItemPosition = position;
 				mlvDrawerMenu.setItemChecked(position, true);
