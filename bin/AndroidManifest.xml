@@ -41,7 +41,7 @@
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="Settings" >
+            android:label="Settings" 
             android:parentActivityName="com.example.youtubemap.MainActivity" >
 
             <meta-data
