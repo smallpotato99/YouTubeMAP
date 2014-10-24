@@ -140,7 +140,7 @@ public class MainActivity extends FragmentActivity implements
         	searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         	searchView.setSubmitButtonEnabled(true);
             searchView.setIconifiedByDefault(false);
-                       
+                        
         }
         
 //        SearchView.OnQueryTextListener queryTextListener = new searchView.OnQueryTextListener() {        	
