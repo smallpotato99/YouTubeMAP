@@ -1,25 +1,17 @@
 package com.example.youtubemap;
 
+import android.app.Activity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
 
-public class SettingsActivity extends PreferenceActivity {	
+public class SettingsActivity extends Activity {	
 		
-	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		setContentView(R.layout.activity_main);
+//		addPreferencesFromResource(R.xml.settings);
 		
-		addPreferencesFromResource(R.xml.settings);	
+		getActionBar().setBackgroundDrawable(new ColorDrawable(Color.DKGRAY));
 	}
-	
-//	@Override
-//	public boolean onCreateOptionsMenu(Menu menu) {
-//		getMenuInflater().inflate(R.menu.main, menu);
-//		return true;
-//	}
-//	
-//	@Override
-//	public boolean onOptionsItemSelected(MenuItem item) {
-//		return super.onOptionsItemSelected(item);
-//	}
 }

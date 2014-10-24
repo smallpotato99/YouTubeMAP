@@ -1,12 +1,9 @@
 package com.example.youtubemap;
 
 import java.io.IOException;
-import java.util.List;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.internal.db;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -24,8 +21,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -405,14 +400,14 @@ public class MainActivity extends FragmentActivity implements
 //        }
 //    }
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent e) {
-		if (keyCode == KeyEvent.KEYCODE_MENU) {
-			Toast.makeText(this, "Menu Key pressed", Toast.LENGTH_SHORT).show();			
-			return true;			
-		}
-		return super.onKeyDown(keyCode, e);
-	}
+//	@Override
+//	public boolean onKeyDown(int keyCode, KeyEvent e) {
+//		if (keyCode == KeyEvent.KEYCODE_MENU) {
+//			Toast.makeText(this, "Menu Key pressed", Toast.LENGTH_SHORT).show();			
+//			return true;			
+//		}
+//		return super.onKeyDown(keyCode, e);
+//	}
 	
 	private void setDrawerMenu() {
 		mlvDrawerMenu = (ListView) findViewById(R.id.left_menu);
@@ -422,14 +417,15 @@ public class MainActivity extends FragmentActivity implements
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				switch (position) {
 				case 0:
+					break;
 				case 1:
 					gotoCurrentLocation();
 					selectMenuItem(position);
 					break;
-				case 5:				
-					Toast.makeText(MainActivity.this, "BINGO", Toast.LENGTH_SHORT).show();
+				case 5:
 					Intent intent = new Intent(MainActivity.this, SettingsActivity.class);
 					startActivity(intent);
+					break;
 				default:
 					selectMenuItem(position);
 				}
