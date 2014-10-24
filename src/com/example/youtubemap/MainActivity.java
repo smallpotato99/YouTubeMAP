@@ -1,9 +1,12 @@
 package com.example.youtubemap;
 
 import java.io.IOException;
+import java.util.List;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.internal.db;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
@@ -21,6 +24,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -38,6 +43,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
 
@@ -52,6 +58,9 @@ public class MainActivity extends FragmentActivity implements
 	private ListView mlvDrawerMenu;
 	private int mCurrentMenuItemPosition = -1;
 	public static final String[] MENU_ITEMS = new String[]{"", "My Location", "Item 2", "Item 3", "Item 4", "Settings"};
+	
+//	private List<String> items = db.getItems();
+	private Menu menu;
 	
 	// Google MAP API
 	private static final int GPS_ERRORDAILOG_REQUEST = 9001;
@@ -146,6 +155,23 @@ public class MainActivity extends FragmentActivity implements
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         searchView.setSubmitButtonEnabled(true);
         searchView.setIconifiedByDefault(false);
+        
+        searchView.setOnQueryTextListener(new OnQueryTextListener() {
+        	
+        	@Override
+        	public boolean onQueryTextChange(String location) {
+
+
+            	return true;
+        	}
+
+			@Override
+			public boolean onQueryTextSubmit(String query) {
+				// TODO Auto-generated method stub
+				return false;
+			}
+        });
+        
         return true;
 //    	return super.onCreateOptionsMenu(menu);
     } 
@@ -250,11 +276,11 @@ public class MainActivity extends FragmentActivity implements
 	}	
 	*/
     
-//    private void gotoLocation(double lat, double lng, float defZoom) {
-//    	LatLng ll = new LatLng(lat, lng);
-//    	CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll,defZoom);
-//    	mMap.moveCamera(update);    	
-//    }
+    private void gotoLocation(double lat, double lng, float defZoom) {
+    	LatLng ll = new LatLng(lat, lng);
+    	CameraUpdate update = CameraUpdateFactory.newLatLngZoom(ll,defZoom);
+    	mMap.moveCamera(update);    	
+    }
     
     public void geoLocate(View v) throws IOException {
     	    /*	
