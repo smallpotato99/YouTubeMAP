@@ -27,9 +27,7 @@ import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
-import android.view.KeyEvent;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -38,7 +36,6 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.widget.Toast;
 
 
@@ -54,10 +51,7 @@ public class MainActivity extends FragmentActivity implements
 	private int mCurrentMenuItemPosition = -1;
 	public static final String[] MENU_ITEMS = new String[]{"", "My Location", "Item 2", "Item 3", "Item 4", "Settings"};
 	
-//	private List<String> items = db.getItems();
-	private Menu menu;
-	
-	// Google MAP API
+// Google MAP API
 	private static final int GPS_ERRORDAILOG_REQUEST = 9001;
 //	private static final int CONNECTION_FAILURE_RESOLUTION_REQUEST = 9002;
 	GoogleMap mMap;
@@ -137,38 +131,33 @@ public class MainActivity extends FragmentActivity implements
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-    	MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main, menu);
-//        MenuItem searchItem = menu.findItem(R.id.editText1);
-//        SearchView searchView = (SearchView) searchItem.getActionView();
-//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-//        SearchableInfo info = searchManager.getSearchableInfo(getComponentName());
-//        searchView.setSearchableInfo(info);
+    	getMenuInflater().inflate(R.menu.main, menu);
         
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setSubmitButtonEnabled(true);
-        searchView.setIconifiedByDefault(false);
         
-        searchView.setOnQueryTextListener(new OnQueryTextListener() {
-        	
-        	@Override
-        	public boolean onQueryTextChange(String location) {
-
-
-            	return true;
-        	}
-
-			@Override
-			public boolean onQueryTextSubmit(String query) {
-				// TODO Auto-generated method stub
-				return false;
-			}
-        });
+        if (null != searchView) {
+        	searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        	searchView.setSubmitButtonEnabled(true);
+            searchView.setIconifiedByDefault(false);
+                       
+        }
         
-        return true;
-//    	return super.onCreateOptionsMenu(menu);
+//        SearchView.OnQueryTextListener queryTextListener = new searchView.OnQueryTextListener() {        	
+//        	@Override
+//        	public boolean onQueryTextChange(String location) {
+//            	return true;
+//        	}
+//
+//			@Override
+//			public boolean onQueryTextSubmit(String query) {
+//				Toast.makeText(MainActivity.this, "BINGO", Toast.LENGTH_SHORT).show();
+//				return false;
+//			}
+//        };
+//        searchView.setOnQueryTextListener(queryTextListener);
+//        return true;
+    	return super.onCreateOptionsMenu(menu);
     } 
     
     /* Called whenever we call invalidateOptionsMenu() */
@@ -277,9 +266,9 @@ public class MainActivity extends FragmentActivity implements
     	mMap.moveCamera(update);    	
     }
     
-    public void geoLocate(View v) throws IOException {
-    	    /*	
-    	EditText et = (EditText) findViewById(R.id.editText1);
+    public void geoLocate(View v) throws IOException {	
+    	/*
+    	EditText editText = (EditText) findViewById(R.id.editText1);
     	String location = et.getText().toString();
     	if (location.length() == 0) {
     		Toast.makeText(this, "Please enter a location", Toast.LENGTH_SHORT).show();
