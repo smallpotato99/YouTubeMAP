@@ -73,33 +73,9 @@ public class MainActivity extends FragmentActivity implements
 //        	mMapView.onCreate(savedInstanceState);
         	
         	if (initMap()) {
-        		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-                mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-                mDrawerToggle = new ActionBarDrawerToggle (
-                		this,
-                		mDrawerLayout,
-                		R.drawable.ic_drawer,
-                		R.string.open_left_drawer,
-                		R.string.close_left_drawer
-                		) {
-                	
-                	public void onDrawerOpened(View drawerView) {
-                		getActionBar().setTitle(R.string.open_left_drawer);
-                	}
-                	
-                	public void onDrawerClosed(View drawerView) {
-                		if (mCurrentMenuItemPosition > -1) {
-                			getActionBar().setTitle(MENU_ITEMS[mCurrentMenuItemPosition]);
-                		}
-                		else {
-                			getActionBar().setTitle(R.string.app_name);	
-                		}
-                	}
-                };
-                
-                mDrawerLayout.setDrawerListener(mDrawerToggle);
-                getActionBar().setDisplayHomeAsUpEnabled(true);
-                getActionBar().setHomeButtonEnabled(true);
+        		startMenuDrawer();
+//                getActionBar().setDisplayHomeAsUpEnabled(true);
+//                getActionBar().setHomeButtonEnabled(true);
                 setDrawerMenu();
         		
         		Toast.makeText(this, "Ready to map!", Toast.LENGTH_SHORT).show();
@@ -115,6 +91,35 @@ public class MainActivity extends FragmentActivity implements
         	setContentView(R.layout.activity_main);
         }
     }
+
+	private void startMenuDrawer() {
+		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+		mlvDrawerMenu = (ListView) findViewById(R.id.left_menu);
+		mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
+		mDrawerToggle = new ActionBarDrawerToggle (
+				this,
+				mDrawerLayout,
+				R.drawable.ic_drawer,
+				R.string.open_left_drawer,
+				R.string.close_left_drawer
+				) {
+			
+			public void onDrawerOpened(View drawerView) {
+				getActionBar().setTitle(R.string.open_left_drawer);
+			}
+			
+			public void onDrawerClosed(View drawerView) {
+				if (mCurrentMenuItemPosition > -1) {
+					getActionBar().setTitle(MENU_ITEMS[mCurrentMenuItemPosition]);
+				}
+				else {
+					getActionBar().setTitle(R.string.app_name);	
+				}
+			}
+		};
+		
+		mDrawerLayout.setDrawerListener(mDrawerToggle);
+	}
 	
 	@Override
 	protected void onPostCreate(Bundle savedInstanceState) {
@@ -399,7 +404,6 @@ public class MainActivity extends FragmentActivity implements
 //	}
 	
 	private void setDrawerMenu() {
-		mlvDrawerMenu = (ListView) findViewById(R.id.left_menu);
 		mllDrawerContent = (LinearLayout) findViewById(R.id.left_drawer);
 		
 		mlvDrawerMenu.setOnItemClickListener(new OnItemClickListener() {

@@ -1484,18 +1484,19 @@ containing a value of this type.
         public static final int action_menu_divider=0x7f060016;
         public static final int action_menu_presenter=0x7f060017;
         public static final int action_mode_close_button=0x7f060036;
-        public static final int action_search=0x7f060057;
+        public static final int action_search=0x7f060058;
         public static final int activity_chooser_view_content=0x7f060037;
         public static final int always=0x7f06000b;
         public static final int beginning=0x7f060011;
         public static final int book_now=0x7f060028;
+        public static final int btnMenu=0x7f060053;
         public static final int buyButton=0x7f060022;
         public static final int buy_now=0x7f060027;
         public static final int buy_with_google=0x7f060026;
         public static final int checkbox=0x7f06003f;
         public static final int classic=0x7f060029;
         public static final int collapseActionView=0x7f06000d;
-        public static final int content_frame=0x7f060055;
+        public static final int content_frame=0x7f060056;
         public static final int default_activity_button=0x7f06003a;
         public static final int dialog=0x7f06000e;
         public static final int disableHome=0x7f060008;
@@ -1514,11 +1515,11 @@ containing a value of this type.
         public static final int icon=0x7f06003c;
         public static final int ifRoom=0x7f06000a;
         public static final int image=0x7f060039;
-        public static final int left_drawer=0x7f060053;
-        public static final int left_menu=0x7f060054;
+        public static final int left_drawer=0x7f060054;
+        public static final int left_menu=0x7f060055;
         public static final int listMode=0x7f060001;
         public static final int list_item=0x7f06003b;
-        public static final int listview_drawer=0x7f060056;
+        public static final int listview_drawer=0x7f060057;
         public static final int main=0x7f060052;
         public static final int map=0x7f060050;
         public static final int match_parent=0x7f060024;
@@ -3501,7 +3502,7 @@ containing a value of this type.
          */
         public static final int[] MenuView = {
             0x010100ae, 0x0101012c, 0x0101012d, 0x0101012e,
-            0x0101012f, 0x01010130, 0x01010131, 0x01010435
+            0x0101012f, 0x01010130, 0x01010131, 0x0101052f
         };
         /**
           <p>
